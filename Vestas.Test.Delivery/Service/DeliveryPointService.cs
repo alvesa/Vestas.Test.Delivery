@@ -56,6 +56,35 @@ namespace Vestas.Test.Delivery.Service
             return result;
         }
 
+        public IEnumerable<DeliveryPoint> GetPoints()
+        {
+            return points;
+        }
+
+        public IEnumerable<DeliveryPoint> GetPointsByNode(char node)
+        {
+            return points.Where(x => x.Origin == node);
+        }
+
+        public void UpdatePoint(DeliveryPoint point)
+        {
+            var pointToUpdate = points.FirstOrDefault(x => x.Origin == point.Origin && x.Destination == point.Destination);
+
+            pointToUpdate = point;
+        }
+
+        public void CreatePoint(DeliveryPoint point)
+        {
+            points.Add(point);
+        }
+
+        public void DeletePoint(char pointA, char pointB)
+        {
+            var point = points.FirstOrDefault(x => x.Origin == pointA && x.Destination == pointB);
+
+            points.Remove(point);
+        }
+
         public void MockService()
         {
             points = new List<DeliveryPoint> {
@@ -133,6 +162,6 @@ namespace Vestas.Test.Delivery.Service
                 },*/
             };
         }
-    
+
     }
 }
