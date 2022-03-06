@@ -34,7 +34,7 @@ namespace Vestas.Test.Delivery
             string assemblyName = typeof(DeliveryPointContext).Namespace;
 
             services.AddDbContext<DeliveryPointContext>(opt => {
-                opt.UseSqlite($"Data Souce=db.db", b => b.MigrationsAssembly(assemblyName));
+                opt.UseMySql(ServerVersion.AutoDetect("server=localhost;database=vestas;user=vestas;password=vestas"));
             });
             
             services.AddControllers();
