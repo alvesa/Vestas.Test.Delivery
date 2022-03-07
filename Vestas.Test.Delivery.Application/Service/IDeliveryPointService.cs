@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Vestas.Test.Delivery.Application.Model;
 
 namespace Vestas.Test.Delivery.Application.Service
@@ -7,9 +8,9 @@ namespace Vestas.Test.Delivery.Application.Service
     {
         int GetShortDistance(char pointA, char pointB);
         IEnumerable<DeliveryPoint> GetPoints();
-        IEnumerable<DeliveryPoint> GetPointsByNode(char node);
-        void UpdatePoint(DeliveryPoint point);
-        void CreatePoint(DeliveryPoint point);
-        void DeletePoint(char pointA, char pointB);
+        DeliveryPoint GetPointsByNode(char node);
+        Task UpdatePoint(DeliveryPoint point);
+        Task CreatePoint(DeliveryPoint point);
+        Task DeletePoint(char pointA, char pointB);
     }
 }

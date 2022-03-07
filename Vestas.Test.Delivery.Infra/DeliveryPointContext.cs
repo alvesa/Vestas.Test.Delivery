@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Vestas.Test.Delivery.Infra.Entity;
+using Vestas.Test.Delivery.Application.Model;
 
 namespace Vestas.Test.Delivery.Infra
 {
@@ -9,6 +9,6 @@ namespace Vestas.Test.Delivery.Infra
         {
         }
 
-        public DbSet<DeliveryPointEntity> DeliveryPoint { get; set; }
+        public DbSet<DeliveryPoint> DeliveryPoint { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Vestas.Test.Delivery.Application.Model;
 using Vestas.Test.Delivery.Application.Service;
@@ -34,25 +35,25 @@ namespace Vestas.Test.Delivery.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdatePoint(DeliveryPoint point)
+        public async Task<IActionResult> UpdatePoint(DeliveryPoint point)
         {
-            _service.UpdatePoint(point);
+           await _service.UpdatePoint(point);
 
             return Accepted();
         }
 
         [HttpPost]
-        public IActionResult CreatePoint(DeliveryPoint point)
+        public async Task<IActionResult> CreatePoint(DeliveryPoint point)
         {
-            _service.CreatePoint(point);
+            await _service.CreatePoint(point);
             
-            return Created("", point);
+            return Created($"/GetPointsByNode/{point.Origin}", point);
         }
 
         [HttpDelete("{pointA}/{pointB}")]
-        public IActionResult DeletePoint(char pointA, char pointB)
+        public async Task<IActionResult> DeletePoint(char pointA, char pointB)
         {
-            _service.DeletePoint(pointA, pointB);
+            await _service.DeletePoint(pointA, pointB);
 
             return Accepted();
         }

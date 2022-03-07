@@ -1,25 +1,30 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Vestas.Test.Delivery.Application.Model;
+using Vestas.Test.Delivery.Application.Repository;
 using Vestas.Test.Delivery.Application.Service;
+using Vestas.Test.Delivery.Infra.Repository;
 
 namespace Vestas.Test.Delivery.Service
 {
     public class DeliveryPointService : IDeliveryPointService
     {
         private IDictionary<char, IGrouping<char, DeliveryPoint>> _originGroup;
-        public DeliveryPointService()
-        {
-            MockService();
-            _originGroup = points.GroupBy(x => x.Origin)
-            .ToDictionary(x => x.Key, x => x);
-        }
-        private IList<DeliveryPoint> points;
         public IList<int> shortestValue;
+        private readonly IDeliveryPointRepository _repository;
+
+        public DeliveryPointService(IDeliveryPointRepository repository)
+        {
+            _repository = repository;
+        }
 
         public int GetShortDistance(char pointA, char pointB)
         {
             shortestValue = new List<int>();
+            _originGroup = _repository.GetPoints().GroupBy(x => x.Origin)
+                .ToDictionary(x => x.Key, x => x);
+
             var res = GetShortPath(pointA, pointB, 0);
 
             return shortestValue.Where(x => x > 0).Min();
@@ -58,110 +63,27 @@ namespace Vestas.Test.Delivery.Service
 
         public IEnumerable<DeliveryPoint> GetPoints()
         {
-            return points;
+            return _repository.GetPoints();
         }
 
-        public IEnumerable<DeliveryPoint> GetPointsByNode(char node)
+        public DeliveryPoint GetPointsByNode(char node)
         {
-            return points.Where(x => x.Origin == node);
+            return _repository.GetPointsByNode(x => x.Origin == node);
         }
 
-        public void UpdatePoint(DeliveryPoint point)
+        public async Task UpdatePoint(DeliveryPoint point)
         {
-            var pointToUpdate = points.FirstOrDefault(x => x.Origin == point.Origin && x.Destination == point.Destination);
-
-            pointToUpdate = point;
+            await _repository.UpdatePoint(point);
         }
 
-        public void CreatePoint(DeliveryPoint point)
+        public async Task CreatePoint(DeliveryPoint point)
         {
-            points.Add(point);
+            await _repository.CreatePoint(point);
         }
 
-        public void DeletePoint(char pointA, char pointB)
+        public async Task DeletePoint(char pointA, char pointB)
         {
-            var point = points.FirstOrDefault(x => x.Origin == pointA && x.Destination == pointB);
-
-            points.Remove(point);
+            await _repository.DeletePoint(pointA, pointB);
         }
-
-        public void MockService()
-        {
-            points = new List<DeliveryPoint> {
-                new DeliveryPoint {
-                    Origin = 'A',
-                    Destination = 'C',
-                    Time = 1,
-                    Cost = 20,
-                },
-                new DeliveryPoint {
-                    Origin = 'A',
-                    Destination = 'E',
-                    Time = 30,
-                    Cost = 5,
-                },
-                new DeliveryPoint {
-                    Origin = 'A',
-                    Destination = 'H',
-                    Time = 10,
-                    Cost = 1,
-                },
-                new DeliveryPoint {
-                    Origin = 'C',
-                    Destination = 'B',
-                    Time = 1,
-                    Cost = 12,
-                },
-                new DeliveryPoint {
-                    Origin = 'E',
-                    Destination = 'D',
-                    Time = 3,
-                    Cost = 5,
-                },
-                new DeliveryPoint {
-                    Origin = 'H',
-                    Destination = 'E',
-                    Time = 30,
-                    Cost = 1,
-                },
-                new DeliveryPoint {
-                    Origin = 'D',
-                    Destination = 'F',
-                    Time = 4,
-                    Cost = 50,
-                },
-                new DeliveryPoint {
-                    Origin = 'F',
-                    Destination = 'I',
-                    Time = 45,
-                    Cost = 50,
-                },
-                new DeliveryPoint {
-                    Origin = 'F',
-                    Destination = 'G',
-                    Time = 40,
-                    Cost = 50,
-                },
-                new DeliveryPoint {
-                    Origin = 'I',
-                    Destination = 'B',
-                    Time = 65,
-                    Cost = 5,
-                },
-                new DeliveryPoint {
-                    Origin = 'G',
-                    Destination = 'B',
-                    Time = 64,
-                    Cost = 73,
-                },
-                /*new DeliveryPoint {
-                    Origin = 'B',
-                    
-                    
-                    
-                },*/
-            };
-        }
-
     }
 }

@@ -11,8 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Vestas.Test.Delivery.Application.Model;
+using Vestas.Test.Delivery.Application.Repository;
 using Vestas.Test.Delivery.Application.Service;
 using Vestas.Test.Delivery.Infra;
+using Vestas.Test.Delivery.Infra.Repository;
 using Vestas.Test.Delivery.Service;
 
 namespace Vestas.Test.Delivery
@@ -30,11 +33,14 @@ namespace Vestas.Test.Delivery
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IDeliveryPointService, DeliveryPointService>();
+            services.AddScoped<IDeliveryPointRepository, DeliveryPointRepository>();
 
-            string assemblyName = typeof(DeliveryPointContext).Namespace;
+            services.AddAutoMapper(config => {
+                config.CreateMap<DeliveryPoint, DeliveryPoint>();
+            });
 
             services.AddDbContext<DeliveryPointContext>(opt => {
-                opt.UseMySql(ServerVersion.AutoDetect("server=localhost;database=vestas;user=vestas;password=vestas"));
+                opt.UseMySql("Server=localhost;Port=3306;Database=vestas;Uid=vestas;Pwd=vestas;",ServerVersion.AutoDetect("Server=localhost;Port=3306;Database=vestas;Uid=vestas;Pwd=vestas;"));
             });
             
             services.AddControllers();
