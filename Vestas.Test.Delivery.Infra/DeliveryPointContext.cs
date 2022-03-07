@@ -10,5 +10,6 @@ namespace Vestas.Test.Delivery.Infra
         }
 
         public DbSet<DeliveryPoint> DeliveryPoint { get; set; }
+        public DbSet<User> User { get; set; }
     }
 }

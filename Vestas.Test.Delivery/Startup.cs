@@ -33,10 +33,13 @@ namespace Vestas.Test.Delivery
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IDeliveryPointService, DeliveryPointService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDeliveryPointRepository, DeliveryPointRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddAutoMapper(config => {
                 config.CreateMap<DeliveryPoint, DeliveryPoint>();
+                config.CreateMap<User, User>();
             });
 
             services.AddDbContext<DeliveryPointContext>(opt => {
