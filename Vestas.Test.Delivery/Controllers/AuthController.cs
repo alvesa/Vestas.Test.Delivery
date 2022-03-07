@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vestas.Test.Delivery.Application.Model;
 using Vestas.Test.Delivery.Application.Service;
+using Vestas.Test.Delivery.Infra;
+using Vestas.Test.Delivery.ViewModel;
 
 namespace Vestas.Test.Delivery.Controllers
 {
@@ -19,9 +21,22 @@ namespace Vestas.Test.Delivery.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Auth(string name, string passCode)
+        public IActionResult Auth([FromBody]AuthViewModel user)
         {
-            return null;
+            var userValidated = _service.Authenticate(user.Name, user.PassCode);
+
+            if(userValidated == null)
+                return NotFound();
+
+            var token = TokenService.GenerateToken(userValidated);
+
+            return Ok(new 
+                { 
+                    Role = userValidated.Role,
+                    Name = userValidated.Name, 
+                    token 
+                }
+            );
         }
 
     }

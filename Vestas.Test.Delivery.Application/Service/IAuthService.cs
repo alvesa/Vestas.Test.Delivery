@@ -1,8 +1,11 @@
+using System.Threading.Tasks;
+using Vestas.Test.Delivery.Application.Model;
+
 namespace Vestas.Test.Delivery.Application.Service
 {
     public interface IAuthService
     {
-        string Authenticate(string name, string passCode);
+        User Authenticate(string name, string passCode);
     }
 
 }

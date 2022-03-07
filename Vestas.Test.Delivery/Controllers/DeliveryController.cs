@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vestas.Test.Delivery.Application.Model;
 using Vestas.Test.Delivery.Application.Service;
@@ -35,6 +36,7 @@ namespace Vestas.Test.Delivery.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdatePoint(DeliveryPoint point)
         {
            await _service.UpdatePoint(point);
@@ -43,6 +45,7 @@ namespace Vestas.Test.Delivery.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreatePoint(DeliveryPoint point)
         {
             await _service.CreatePoint(point);
@@ -51,6 +54,7 @@ namespace Vestas.Test.Delivery.Controllers
         }
 
         [HttpDelete("{pointA}/{pointB}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeletePoint(char pointA, char pointB)
         {
             await _service.DeletePoint(pointA, pointB);

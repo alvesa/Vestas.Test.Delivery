@@ -53,5 +53,10 @@ namespace Vestas.Test.Delivery.Infra.Repository
 
             await _context.SaveChangesAsync();
         }
+
+        public User GetUserByCredentials(string name, string passCode)
+        {
+           return  _context.User.FirstOrDefault(x => x.Name == name && x.PassCode == passCode);
+        }
     }
 }

@@ -40,5 +40,10 @@ namespace Vestas.Test.Delivery.Service
         {
             await _repository.Update(user);
         }
+
+        public User GetUserByCredentials(string name, string passCode)
+        {
+            return _repository.GetUserByCredentials(name, passCode);
+        }
     }
 }

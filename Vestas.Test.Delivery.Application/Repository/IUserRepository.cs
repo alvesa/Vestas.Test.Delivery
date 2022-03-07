@@ -12,6 +12,6 @@ namespace Vestas.Test.Delivery.Application.Repository
         Task Delete(Guid id); 
         IEnumerable<User> GetAll();
         User GetById(Guid id);
-
+        User GetUserByCredentials(string name, string passCode);
     }
 }

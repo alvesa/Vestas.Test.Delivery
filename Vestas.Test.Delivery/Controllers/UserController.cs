@@ -23,7 +23,7 @@ namespace Vestas.Test.Delivery.Controllers
             return Ok(_service.GetAll());
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
         {
             return Ok(_service.GetById(id));

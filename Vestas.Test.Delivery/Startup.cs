@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Vestas.Test.Delivery.Application.Model;
 using Vestas.Test.Delivery.Application.Repository;
@@ -34,6 +37,7 @@ namespace Vestas.Test.Delivery
         {
             services.AddScoped<IDeliveryPointService, DeliveryPointService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IDeliveryPointRepository, DeliveryPointRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
@@ -45,6 +49,24 @@ namespace Vestas.Test.Delivery
             services.AddDbContext<DeliveryPointContext>(opt => {
                 opt.UseMySql("Server=localhost;Port=3306;Database=vestas;Uid=vestas;Pwd=vestas;",ServerVersion.AutoDetect("Server=localhost;Port=3306;Database=vestas;Uid=vestas;Pwd=vestas;"));
             });
+
+            var key = Encoding.ASCII.GetBytes("secret-key-vestas");
+
+            services.AddAuthentication(x => {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
             
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -65,6 +87,7 @@ namespace Vestas.Test.Delivery
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
