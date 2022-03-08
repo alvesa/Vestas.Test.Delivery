@@ -41,6 +41,7 @@ namespace Vestas.Test.Delivery
             services.AddScoped<IDeliveryPointService, DeliveryPointService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IDeliveryPointRepository, DeliveryPointRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 

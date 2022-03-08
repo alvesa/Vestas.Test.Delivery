@@ -26,7 +26,7 @@ namespace Vestas.Test.Delivery.Controllers
             if(userValidated == null)
                 return NotFound();
 
-            var token = TokenService.GenerateToken(userValidated);
+            var token = _service.GenerateToken(userValidated);
 
             return Ok(new 
                 { 

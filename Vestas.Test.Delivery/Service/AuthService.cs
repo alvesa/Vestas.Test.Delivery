@@ -7,15 +7,22 @@ namespace Vestas.Test.Delivery.Service
     public class AuthService : IAuthService
     {
         private readonly IUserService _service;
+        private readonly ITokenService _tokenService;
 
-        public AuthService(IUserService service)
+        public AuthService(IUserService service, ITokenService tokenService = null)
         {
             _service = service;
+            _tokenService = tokenService;
         }
 
         public User Authenticate(string name, string passCode)
         {
             return _service.GetUserByCredentials(name, passCode);
+        }
+
+        public string GenerateToken(User user)
+        {
+            return _tokenService.GenerateToken(user);
         }
     }
 }

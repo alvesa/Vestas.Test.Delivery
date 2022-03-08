@@ -6,6 +6,7 @@ namespace Vestas.Test.Delivery.Application.Service
     public interface IAuthService
     {
         User Authenticate(string name, string passCode);
+        string GenerateToken(Model.User user);
     }
 
 }

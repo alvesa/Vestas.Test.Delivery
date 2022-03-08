@@ -12,3 +12,5 @@ services:
       MYSQL_PASSWORD: vestas
     ports:
       - 3306:3306
+  api:
+    image: mcr.microsoft.com\dotnet\sdk:5.0

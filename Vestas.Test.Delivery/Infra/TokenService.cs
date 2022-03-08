@@ -4,14 +4,23 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Vestas.Test.Delivery.Application.Model;
 using System;
+using Microsoft.Extensions.Configuration;
+using Vestas.Test.Delivery.Application.Service;
 
 namespace Vestas.Test.Delivery.Infra
 {
-    public class TokenService
+    public class TokenService : ITokenService
     {
-        public static string GenerateToken(User user)
+        private readonly IConfiguration _configuration;
+
+        public TokenService(IConfiguration configuration)
         {
-            var secretKey = Environment.GetEnvironmentVariable("vestasSecretKey");
+            _configuration = configuration;
+        }
+
+        public string GenerateToken(User user)
+        {
+            var secretKey = _configuration.GetValue<string>("vestasSecretKey");
 
             var handler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secretKey);
