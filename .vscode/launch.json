@@ -18,7 +18,9 @@
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
             },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "vestasConnString": "Server=localhost;Port=3306;Database=vestas;Uid=vestas;Pwd=vestas;",
+                "vestasSecretKey": "vestas-secret-key"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"

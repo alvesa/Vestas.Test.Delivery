@@ -1,7 +1,5 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vestas.Test.Delivery.Application.Model;
 using Vestas.Test.Delivery.Application.Service;
 using Vestas.Test.Delivery.Infra;
 using Vestas.Test.Delivery.ViewModel;

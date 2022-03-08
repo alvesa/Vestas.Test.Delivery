@@ -11,8 +11,10 @@ namespace Vestas.Test.Delivery.Infra
     {
         public static string GenerateToken(User user)
         {
+            var secretKey = Environment.GetEnvironmentVariable("vestasSecretKey");
+
             var handler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("secret-key-vestas");
+            var key = Encoding.ASCII.GetBytes(secretKey);
             var descriptor = new SecurityTokenDescriptor 
             {
                 Subject = new ClaimsIdentity(new Claim[]

@@ -35,6 +35,9 @@ namespace Vestas.Test.Delivery
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connString = Environment.GetEnvironmentVariable("vestasConnString");
+            var secretKey = Environment.GetEnvironmentVariable("vestasSecretKey");
+
             services.AddScoped<IDeliveryPointService, DeliveryPointService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
@@ -47,10 +50,10 @@ namespace Vestas.Test.Delivery
             });
 
             services.AddDbContext<DeliveryPointContext>(opt => {
-                opt.UseMySql("Server=localhost;Port=3306;Database=vestas;Uid=vestas;Pwd=vestas;",ServerVersion.AutoDetect("Server=localhost;Port=3306;Database=vestas;Uid=vestas;Pwd=vestas;"));
+                opt.UseMySql(connString,ServerVersion.AutoDetect(connString));
             });
 
-            var key = Encoding.ASCII.GetBytes("secret-key-vestas");
+            var key = Encoding.ASCII.GetBytes(secretKey);
 
             services.AddAuthentication(x => {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
