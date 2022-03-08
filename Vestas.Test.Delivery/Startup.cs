@@ -35,8 +35,8 @@ namespace Vestas.Test.Delivery
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connString = Environment.GetEnvironmentVariable("vestasConnString");
-            var secretKey = Environment.GetEnvironmentVariable("vestasSecretKey");
+            var connString = Configuration.GetConnectionString("vestasConnString");
+            var secretKey = Configuration.GetValue<string>("vestasSecretKey");
 
             services.AddScoped<IDeliveryPointService, DeliveryPointService>();
             services.AddScoped<IUserService, UserService>();
