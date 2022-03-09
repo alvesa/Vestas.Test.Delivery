@@ -19,3 +19,7 @@ dotnet Vestas.Test.Delivery.dll
 - Mysql v8+
 - Jwt
 - Docker
+
+## TODO
+- Remove the workaround to run the application (issue caused by docker compose)
+- Register an issue to fix the connection between the db and application in the compose
