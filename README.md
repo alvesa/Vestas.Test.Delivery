@@ -12,7 +12,8 @@ dotnet publish -c Release -o dist
 cd dist
 dotnet Vestas.Test.Delivery.dll
 ```
-
+### Testing the aaplication
+- Once both containers running there is in the **Misc** folder a json file with the **insominia** collections to perform the tests
 ### Tools/Frameworks and runtimes
 - .NET Core v 5.0.14
 - Entity Framework.Core v 5.0.14 (Code First) with migrations
