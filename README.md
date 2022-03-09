@@ -14,7 +14,7 @@ dotnet Vestas.Test.Delivery.dll
 ```
 
 ### Tools/Frameworks and runtimes
-- .NET v 5.0.14
+- .NET Core v 5.0.14
 - Entity Framework.Core v 5.0.14 (Code First) with migrations
 - Mysql v8+
 - Jwt
