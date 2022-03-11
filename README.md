@@ -24,3 +24,5 @@ dotnet Vestas.Test.Delivery.dll
 ## TODO
 - Remove the workaround to run the application (issue caused by docker compose)
 - Register an issue to fix the connection between the db and application in the compose
+- Encrypt password
+- Include Tests
